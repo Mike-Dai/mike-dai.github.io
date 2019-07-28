@@ -220,6 +220,66 @@
         <article class="entry-single">
   
   <header class="entry-header">
+    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/constructoranddestructor/" title="构造，析构，拷贝语意学" class="entry-link">构造，析构，拷贝语意学</a></h3>
+  </header>
+
+  <p class="entry-summary"> 纯虚函数的存在 在C&#43;&#43;中，可以静态调用一个纯虚函数。但不要把virtual destructor声明为pure。因为每一个derived class destructor会以静态方式调用其每一个virtual base class以及上一层base class的destructor。因此，只要缺乏任何一个base class destructor的定义，就会导致链接失败。原因是C&#43;&#43;保证继承体系中每一个class object的destructor都会被调用。
+“无继承”情况下的对象构造 一个object的生命，是该object的一个执行期属性。Local object的生命从定义开始，区块结束时消亡。Global object的生命和整个程序的生命相同。Heap object的生命从它被new运算符配置出来开始，到它被delete运算符摧毁为止。 在C中，global被视为一个临时性的定义，因为它没有显式的初始化操作。它被放在data segment中一个“特别保留给未初始化之global objects使用”的空间，成为BSS（Block Started by Symbol）。 C&#43;&#43;并不支持临时性的定义。Global在C&#43;&#43;中被视为完全定义，所有全局对象都被以“初始化过的数据”来对待。
+抽象数据类型 void mumble() { Point local = {1.0, 2.0, 3.0}; }  如果要将class中的所有成员设定初值，那么像这样给予一个explicit initialization list会比较有效率些。因为当函数的activation record被放进程序堆栈时，上述initialization list中的常量就可以被放进local内存中了。 explicit initialization list带来三项缺点： 1. 只有当class member都是public, 此法才奏效。 2. 只能指定常量，因为它们在编译时期就可以被评估求值。 3. 由于编译器并没有自动施行之，所以初始化行为的失败可能性会高一些。
+为继承做准备 virtual function的导入使每一个class object多负担一个vptr，也使class产生膨胀： - 我们所定义的constructor被附加了一些代码，以便将vptr初始化。 - 合成一个copy constructor和一个copy assignment operator，而且其操作不再是trival。
+继承体系下的对象构造  所有virtual base class constructors必须被调用，从左到右，从最深到最浅： 如果class被列于member initialization list中，那么如果有任何显式指定的参数，都应该传递过去。若没有列于list中，而class有一个default constructor，亦应该调用之。 此外，每一个virtual base class subobject的offset必须在执行期可被存取。 如果class object是最底层的class,其constructor可能被调用，某些用以支持这一行为的机制必须被放进来。 所有上一层的base class constructor必须被调用，以base class的声明顺序为顺序（与member initialization list中的顺序没关联）： 如果class被列于member initialization list中，那么如果有任何显式指定的参数，都应该传递过去。 若没有列于list中，而class有一个default constructor，亦应该调用之。 如果base class是多重继承下的第二或后继的base class，那么this指针必须有所调整。 如果class object有vptr, 它们必须被设定初始值，指向适当的virtual table。 记录在member initialization list中的data member初始化操作会被放进constructor函数本体，并以members的声明顺序为顺序。 如果有一个member并没有出现在member initialization list之中，但它有一个default constructor，那么该default constructor必须被调用。  </p>
+  <footer class="entry-footer">
+    <p class="entry-meta"><span class="entry-time">Jul 28, 2019</span> 1 min read</p>
+    <div class="sharing">
+      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2fconstructoranddestructor%2f" title="Share on Facebook">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
+      </a>
+      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=%e6%9e%84%e9%80%a0%ef%bc%8c%e6%9e%90%e6%9e%84%ef%bc%8c%e6%8b%b7%e8%b4%9d%e8%af%ad%e6%84%8f%e5%ad%a6&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fconstructoranddestructor%2f" title="Share on Twitter">
+        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
+      </a>
+      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=%e6%9e%84%e9%80%a0%ef%bc%8c%e6%9e%90%e6%9e%84%ef%bc%8c%e6%8b%b7%e8%b4%9d%e8%af%ad%e6%84%8f%e5%ad%a6&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fconstructoranddestructor%2f" title="Share on Google+">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
+      </a>
+    </div>
+  </footer>
+</article>
+
+      
+        <article class="entry-single">
+  
+  <header class="entry-header">
+    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/data-semantics/" title="Data Semantics" class="entry-link">Data Semantics</a></h3>
+  </header>
+
+  <p class="entry-summary">Data语意学 class的大小受到三个因素的影响 语言本身所造成的overhead 编译器对特殊情况所提供的特殊处理 Alignment的限制  Data Member的绑定 对member function本体的分析，会直到整个class的声明都出现了才开始。因此，不需要把data member放在class声明起头处。
+但是，class内部的typedef必须定义于被使用之前。
+Data member的布局 Nonstatic data members在class object中的排列顺序和其被声明的顺序一样。较晚出现的有较高地址。
+Static data members存放在程序的data segment中，和个别的class object无关。
+Data member的存取  Point3d origin; origin.x = 0; Point3d origin, *pt = &amp;origin;   origin.x = 0; pt-&gt;x = 0;  本节将讨论这一问题：用以上两种方法存取，有什么重大差异吗
+static data member 可以通过一个对象经由 “.” 运算符存取static成员，但实际上它不在class object中。出于同样的原因，若取一个static data member的地址，会得到一个指向其数据类型的指针，而非指向其class member的指针。
+当两个class声明了同样名称的static member，在程序的data segment中会导致命名冲突，编译器的解决方法是暗中对它们编码。
+Nonstatic data member 进行存取操作时，编译器需要把class object的起始地址加上data member的offset。这个offset在编译期就可获知。
+回到刚才的问题。当Point3d是个derived class，而其继承结构中有一个virtual base class，并且存取的x来自virtual base class，就会有重大差异。我们不能在编译期判断pt指向哪一种class type，因此也不能知道offset，需要延迟到执行期。所以存取速度会稍慢一些。</p>
+  <footer class="entry-footer">
+    <p class="entry-meta"><span class="entry-time">Jul 13, 2019</span> 1 min read</p>
+    <div class="sharing">
+      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2fdata-semantics%2f" title="Share on Facebook">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
+      </a>
+      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=Data%20Semantics&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fdata-semantics%2f" title="Share on Twitter">
+        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
+      </a>
+      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=Data%20Semantics&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fdata-semantics%2f" title="Share on Google+">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
+      </a>
+    </div>
+  </footer>
+</article>
+
+      
+        <article class="entry-single">
+  
+  <header class="entry-header">
     <h3 class="entry-title"><a href="https://mike-dai.github.io/post/blog/" title="Blog" class="entry-link">Blog</a></h3>
   </header>
 
