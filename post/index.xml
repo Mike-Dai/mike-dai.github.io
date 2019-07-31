@@ -6,10 +6,19 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jul 2019 15:03:19 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 31 Jul 2019 17:44:01 +0800</lastBuildDate>
     
 	<atom:link href="https://mike-dai.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>TCP和UDP的区别</title>
+      <link>https://mike-dai.github.io/post/tcpandudp/</link>
+      <pubDate>Wed, 31 Jul 2019 17:44:01 +0800</pubDate>
+      
+      <guid>https://mike-dai.github.io/post/tcpandudp/</guid>
+      <description> TCP面向连接，提供client和server之间的连接。UDP则是无连接，client和server之间没有长期关系。 TCP提供可靠性。TCP向另一端传送数据时，它要求返回acknowledgment。如果没有收到acknowledgment，TCP自动重传数据，并等待比上次更长的时间。几次重传都失败后，TCP会放弃，这段总时间大约4～10分钟。TCP包含动态估计client和server之间的round-trip time(RTT)的算法，从而知道等待acknowledgment的时间。TCP通过给每一个byte一个序列号来按序排列数据。这可以防止乱序发送和重复发送数据。 以上机制保证了TCP的可靠性，也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达。需要注意的是，TCP并不保证另一端一定会收到数据，这是不可能做到的。它的可靠性体现在传输数据的可靠性和失败时给用户可靠的提示。 与TCP不同，UDP不提供可靠性。 TCP提供流量控制，通过窗口来控制接收的数据量。 TCP是流模式，不记录边界。UDP是数据报模式，每一个UDP报文都会记录长度。 TCP连接是全双工的，这意味着一个连接可以双向发送和接收数据。UDP则是不可靠信道。 每一条TCP连接只能是点到点的。UDP支持一对一，一对多，多对一和多对多的交互通信。 TCP首部开销20个字节。UDP首部开销小，只有8个字节。  </description>
+    </item>
     
     <item>
       <title>构造，析构，拷贝语意学</title>
