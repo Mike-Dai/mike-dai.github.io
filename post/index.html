@@ -232,6 +232,34 @@
         <article class="entry-single">
   
   <header class="entry-header">
+    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/time_wait/" title="需要TIME_WAIT的原因" class="entry-link">需要TIME_WAIT的原因</a></h3>
+  </header>
+
+  <p class="entry-summary">TIMEWAIT的时长是MSL的2倍。MSL全称maximum segment lifetime，指任何给定IP报文能在网络中存活的时间。
+它的存在有两个原因：
+ 为了实现TCP全双工连接的可靠终止。TCP连接中server关闭时，向client发送FIN，client接收并回复ACK。假设这最终的ACK丢失了，server就需要重新发送FIN。有了TIMEWAIT，client就可以保存状态，接收这个FIN并回复ACK。如果没有TIMEWAIT，client则无法保存状态，就会回复RST（重新启动），使server中断出错。这也说明TIME_WAIT应该在主动关闭的那一端，因为有可能需要重新发送最终的ACK。
+ 允许“离群的段”在网络中失效。假设两台主机之间建立连接，然后出现延迟或重传段在连接关闭后到达，产生离群的段。马上在跟上次相同主机的相同端口之间又建立连接，由于主机相同端口相同，称为incarnation（化身）。如果旧有连接产生的离群的段在此时到达，会被误认为属于incarnation连接。所以需要TIME_WAIT，如果一个连接进入TIME_WAIT状态，TCP将不会为它制造incarnation。
+  </p>
+  <footer class="entry-footer">
+    <p class="entry-meta"><span class="entry-time">Aug 3, 2019</span> 1 min read</p>
+    <div class="sharing">
+      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Facebook">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
+      </a>
+      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=%e9%9c%80%e8%a6%81TIME_WAIT%e7%9a%84%e5%8e%9f%e5%9b%a0&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Twitter">
+        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
+      </a>
+      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=%e9%9c%80%e8%a6%81TIME_WAIT%e7%9a%84%e5%8e%9f%e5%9b%a0&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Google+">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
+      </a>
+    </div>
+  </footer>
+</article>
+
+      
+        <article class="entry-single">
+  
+  <header class="entry-header">
     <h3 class="entry-title"><a href="https://mike-dai.github.io/post/tcpandudp/" title="TCP和UDP的区别" class="entry-link">TCP和UDP的区别</a></h3>
   </header>
 

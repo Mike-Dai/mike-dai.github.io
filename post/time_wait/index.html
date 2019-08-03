@@ -10,24 +10,34 @@
     
 
     
-    <title>My New Hugo Site</title>
+    <title>需要TIME_WAIT的原因</title>
 
     
     
 
 
 
-
+  
   
   <meta name="author" content="" />
-  <meta name="description" content="" />
+  <meta name="description" content="TIMEWAIT的时长是MSL的2倍。MSL全称maximum segment lifetime，指任何给定IP报文能在网络中存活的时间。
+它的存在有两个原因：
+ 为了实现TCP全双工连接的可靠终止。TCP连接中server关闭时，向client发送FIN，client接收并回复ACK。假设这最终的ACK丢失了，server就需要重新发送FIN。有了TIMEWAIT，client就可以保存状态，接收这个FIN并回复ACK。如果没有TIMEWAIT，client则无法保存状态，就会回复RST（重新启动），使server中断出错。这也说明TIME_WAIT应该在主动关闭的那一端，因为有可能需要重新发送最终的ACK。
+ 允许“离群的段”在网络中失效。假设两台主机之间建立连接，然后出现延迟或重传段在连接关闭后到达，产生离群的段。马上在跟上次相同主机的相同端口之间又建立连接，由于主机相同端口相同，称为incarnation（化身）。如果旧有连接产生的离群的段在此时到达，会被误认为属于incarnation连接。所以需要TIME_WAIT，如果一个连接进入TIME_WAIT状态，TCP将不会为它制造incarnation。
+  ">
 
   
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@gohugoio" />
-  <meta name="twitter:title" content="My New Hugo Site" />
-  <meta name="twitter:description" content="" />
-  <meta name="twitter:image" content="https://mike-dai.github.io/img/avatar.jpg" />
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="需要TIME_WAIT的原因" />
+    <meta name="twitter:description" content="TIMEWAIT的时长是MSL的2倍。MSL全称maximum segment lifetime，指任何给定IP报文能在网络中存活的时间。
+它的存在有两个原因：
+ 为了实现TCP全双工连接的可靠终止。TCP连接中server关闭时，向client发送FIN，client接收并回复ACK。假设这最终的ACK丢失了，server就需要重新发送FIN。有了TIMEWAIT，client就可以保存状态，接收这个FIN并回复ACK。如果没有TIMEWAIT，client则无法保存状态，就会回复RST（重新启动），使server中断出错。这也说明TIME_WAIT应该在主动关闭的那一端，因为有可能需要重新发送最终的ACK。
+ 允许“离群的段”在网络中失效。假设两台主机之间建立连接，然后出现延迟或重传段在连接关闭后到达，产生离群的段。马上在跟上次相同主机的相同端口之间又建立连接，由于主机相同端口相同，称为incarnation（化身）。如果旧有连接产生的离群的段在此时到达，会被误认为属于incarnation连接。所以需要TIME_WAIT，如果一个连接进入TIME_WAIT状态，TCP将不会为它制造incarnation。
+  " />
+    <meta name="twitter:image" content="https://mike-dai.github.io/img/avatar.jpg" />
+  
 
 
 
@@ -35,7 +45,7 @@
 <meta name="generator" content="Hugo 0.40.1">
 
 
-<link rel="canonical" href="https://mike-dai.github.io/">
+<link rel="canonical" href="https://mike-dai.github.io/post/time_wait/">
 <link rel="alternative" href="/index.xml" title="My New Hugo Site" type="application/atom+xml">
 
 
@@ -155,7 +165,7 @@
     sizes="(max-width: 800px) 36px, 128px">
   </amp-img>
   
-    <h1 class="title"><a href="https://mike-dai.github.io/" title="My New Hugo Site">My New Hugo Site</a></h1>
+    <h2 class="title"><a href="https://mike-dai.github.io/" title="My New Hugo Site">My New Hugo Site</a></h2>
   
   <p class="subtitle"></p>
   <button class="menu-toggle" type="button" on="tap:sidebar.open">
@@ -213,170 +223,37 @@
 </amp-sidebar>
 
     
-  <section class="main entry-list">
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">需要TIME_WAIT的原因</h1>
+      <p class="entry-meta"><span class="entry-time">Aug 3, 2019</span> 1 min read</p>
+    </header>
     
-    
-      
-        <article class="entry-single">
-  
-  <header class="entry-header">
-    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/time_wait/" title="需要TIME_WAIT的原因" class="entry-link">需要TIME_WAIT的原因</a></h3>
-  </header>
 
-  <p class="entry-summary">TIMEWAIT的时长是MSL的2倍。MSL全称maximum segment lifetime，指任何给定IP报文能在网络中存活的时间。
-它的存在有两个原因：
- 为了实现TCP全双工连接的可靠终止。TCP连接中server关闭时，向client发送FIN，client接收并回复ACK。假设这最终的ACK丢失了，server就需要重新发送FIN。有了TIMEWAIT，client就可以保存状态，接收这个FIN并回复ACK。如果没有TIMEWAIT，client则无法保存状态，就会回复RST（重新启动），使server中断出错。这也说明TIME_WAIT应该在主动关闭的那一端，因为有可能需要重新发送最终的ACK。
- 允许“离群的段”在网络中失效。假设两台主机之间建立连接，然后出现延迟或重传段在连接关闭后到达，产生离群的段。马上在跟上次相同主机的相同端口之间又建立连接，由于主机相同端口相同，称为incarnation（化身）。如果旧有连接产生的离群的段在此时到达，会被误认为属于incarnation连接。所以需要TIME_WAIT，如果一个连接进入TIME_WAIT状态，TCP将不会为它制造incarnation。
-  </p>
-  <footer class="entry-footer">
-    <p class="entry-meta"><span class="entry-time">Aug 3, 2019</span> 1 min read</p>
-    <div class="sharing">
-      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Facebook">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
-      </a>
-      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=%e9%9c%80%e8%a6%81TIME_WAIT%e7%9a%84%e5%8e%9f%e5%9b%a0&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Twitter">
-        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
-      </a>
-      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=%e9%9c%80%e8%a6%81TIME_WAIT%e7%9a%84%e5%8e%9f%e5%9b%a0&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Google+">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
-      </a>
-    </div>
-  </footer>
+    <article class="post-content"><p>TIMEWAIT的时长是MSL的2倍。MSL全称maximum segment lifetime，指任何给定IP报文能在网络中存活的时间。</p>
+
+<p>它的存在有两个原因：</p>
+
+<ol>
+<li><p>为了实现TCP全双工连接的可靠终止。TCP连接中server关闭时，向client发送FIN，client接收并回复ACK。假设这最终的ACK丢失了，server就需要重新发送FIN。有了TIMEWAIT，client就可以保存状态，接收这个FIN并回复ACK。如果没有TIMEWAIT，client则无法保存状态，就会回复RST（重新启动），使server中断出错。这也说明TIME_WAIT应该在主动关闭的那一端，因为有可能需要重新发送最终的ACK。</p></li>
+
+<li><p>允许“离群的段”在网络中失效。假设两台主机之间建立连接，然后出现延迟或重传段在连接关闭后到达，产生离群的段。马上在跟上次相同主机的相同端口之间又建立连接，由于主机相同端口相同，称为incarnation（化身）。如果旧有连接产生的离群的段在此时到达，会被误认为属于incarnation连接。所以需要TIME_WAIT，如果一个连接进入TIME_WAIT状态，TCP将不会为它制造incarnation。</p></li>
+</ol>
 </article>
-
+    <footer class="post-footer">
       
-        <article class="entry-single">
-  
-  <header class="entry-header">
-    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/tcpandudp/" title="TCP和UDP的区别" class="entry-link">TCP和UDP的区别</a></h3>
-  </header>
-
-  <p class="entry-summary"> TCP面向连接，提供client和server之间的连接。UDP则是无连接，client和server之间没有长期关系。 TCP提供可靠性。TCP向另一端传送数据时，它要求返回acknowledgment。如果没有收到acknowledgment，TCP自动重传数据，并等待比上次更长的时间。几次重传都失败后，TCP会放弃，这段总时间大约4～10分钟。TCP包含动态估计client和server之间的round-trip time(RTT)的算法，从而知道等待acknowledgment的时间。TCP通过给每一个byte一个序列号来按序排列数据。这可以防止乱序发送和重复发送数据。 以上机制保证了TCP的可靠性，也就是说，通过TCP连接传送的数据，无差错，不丢失，不重复，且按序到达。需要注意的是，TCP并不保证另一端一定会收到数据，这是不可能做到的。它的可靠性体现在传输数据的可靠性和失败时给用户可靠的提示。 与TCP不同，UDP不提供可靠性。 TCP提供流量控制，通过窗口来控制接收的数据量。 TCP是流模式，不记录边界。UDP是数据报模式，每一个UDP报文都会记录长度。 TCP连接是全双工的，这意味着一个连接可以双向发送和接收数据。UDP则是不可靠信道。 每一条TCP连接只能是点到点的。UDP支持一对一，一对多，多对一和多对多的交互通信。 TCP首部开销20个字节。UDP首部开销小，只有8个字节。  </p>
-  <footer class="entry-footer">
-    <p class="entry-meta"><span class="entry-time">Jul 31, 2019</span> 1 min read</p>
-    <div class="sharing">
-      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2ftcpandudp%2f" title="Share on Facebook">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
-      </a>
-      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=TCP%e5%92%8cUDP%e7%9a%84%e5%8c%ba%e5%88%ab&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftcpandudp%2f" title="Share on Twitter">
-        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
-      </a>
-      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=TCP%e5%92%8cUDP%e7%9a%84%e5%8c%ba%e5%88%ab&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftcpandudp%2f" title="Share on Google+">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
-      </a>
-    </div>
-  </footer>
-</article>
-
-      
-        <article class="entry-single">
-  
-  <header class="entry-header">
-    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/constructoranddestructor/" title="构造，析构，拷贝语意学" class="entry-link">构造，析构，拷贝语意学</a></h3>
-  </header>
-
-  <p class="entry-summary"> 纯虚函数的存在 在C&#43;&#43;中，可以静态调用一个纯虚函数。但不要把virtual destructor声明为pure。因为每一个derived class destructor会以静态方式调用其每一个virtual base class以及上一层base class的destructor。因此，只要缺乏任何一个base class destructor的定义，就会导致链接失败。原因是C&#43;&#43;保证继承体系中每一个class object的destructor都会被调用。
-“无继承”情况下的对象构造 一个object的生命，是该object的一个执行期属性。Local object的生命从定义开始，区块结束时消亡。Global object的生命和整个程序的生命相同。Heap object的生命从它被new运算符配置出来开始，到它被delete运算符摧毁为止。 在C中，global被视为一个临时性的定义，因为它没有显式的初始化操作。它被放在data segment中一个“特别保留给未初始化之global objects使用”的空间，成为BSS（Block Started by Symbol）。 C&#43;&#43;并不支持临时性的定义。Global在C&#43;&#43;中被视为完全定义，所有全局对象都被以“初始化过的数据”来对待。
-抽象数据类型 void mumble() { Point local = {1.0, 2.0, 3.0}; }  如果要将class中的所有成员设定初值，那么像这样给予一个explicit initialization list会比较有效率些。因为当函数的activation record被放进程序堆栈时，上述initialization list中的常量就可以被放进local内存中了。 explicit initialization list带来三项缺点： 1. 只有当class member都是public, 此法才奏效。 2. 只能指定常量，因为它们在编译时期就可以被评估求值。 3. 由于编译器并没有自动施行之，所以初始化行为的失败可能性会高一些。
-为继承做准备 virtual function的导入使每一个class object多负担一个vptr，也使class产生膨胀： - 我们所定义的constructor被附加了一些代码，以便将vptr初始化。 - 合成一个copy constructor和一个copy assignment operator，而且其操作不再是trival。
-继承体系下的对象构造  所有virtual base class constructors必须被调用，从左到右，从最深到最浅： 如果class被列于member initialization list中，那么如果有任何显式指定的参数，都应该传递过去。若没有列于list中，而class有一个default constructor，亦应该调用之。 此外，每一个virtual base class subobject的offset必须在执行期可被存取。 如果class object是最底层的class,其constructor可能被调用，某些用以支持这一行为的机制必须被放进来。 所有上一层的base class constructor必须被调用，以base class的声明顺序为顺序（与member initialization list中的顺序没关联）： 如果class被列于member initialization list中，那么如果有任何显式指定的参数，都应该传递过去。 若没有列于list中，而class有一个default constructor，亦应该调用之。 如果base class是多重继承下的第二或后继的base class，那么this指针必须有所调整。 如果class object有vptr, 它们必须被设定初始值，指向适当的virtual table。 记录在member initialization list中的data member初始化操作会被放进constructor函数本体，并以members的声明顺序为顺序。 如果有一个member并没有出现在member initialization list之中，但它有一个default constructor，那么该default constructor必须被调用。  </p>
-  <footer class="entry-footer">
-    <p class="entry-meta"><span class="entry-time">Jul 28, 2019</span> 1 min read</p>
-    <div class="sharing">
-      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2fconstructoranddestructor%2f" title="Share on Facebook">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
-      </a>
-      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=%e6%9e%84%e9%80%a0%ef%bc%8c%e6%9e%90%e6%9e%84%ef%bc%8c%e6%8b%b7%e8%b4%9d%e8%af%ad%e6%84%8f%e5%ad%a6&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fconstructoranddestructor%2f" title="Share on Twitter">
-        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
-      </a>
-      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=%e6%9e%84%e9%80%a0%ef%bc%8c%e6%9e%90%e6%9e%84%ef%bc%8c%e6%8b%b7%e8%b4%9d%e8%af%ad%e6%84%8f%e5%ad%a6&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fconstructoranddestructor%2f" title="Share on Google+">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
-      </a>
-    </div>
-  </footer>
-</article>
-
-      
-        <article class="entry-single">
-  
-  <header class="entry-header">
-    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/data-semantics/" title="Data语意学" class="entry-link">Data语意学</a></h3>
-  </header>
-
-  <p class="entry-summary">class的大小受到三个因素的影响 语言本身所造成的overhead 编译器对特殊情况所提供的特殊处理 Alignment的限制  Data Member的绑定 对member function本体的分析，会直到整个class的声明都出现了才开始。因此，不需要把data member放在class声明起头处。
-但是，class内部的typedef必须定义于被使用之前。
-Data member的布局 Nonstatic data members在class object中的排列顺序和其被声明的顺序一样。较晚出现的有较高地址。
-Static data members存放在程序的data segment中，和个别的class object无关。
-Data member的存取  Point3d origin; origin.x = 0; Point3d origin, *pt = &amp;origin;   origin.x = 0; pt-&gt;x = 0;  本节将讨论这一问题：用以上两种方法存取，有什么重大差异吗
-static data member 可以通过一个对象经由 “.” 运算符存取static成员，但实际上它不在class object中。出于同样的原因，若取一个static data member的地址，会得到一个指向其数据类型的指针，而非指向其class member的指针。
-当两个class声明了同样名称的static member，在程序的data segment中会导致命名冲突，编译器的解决方法是暗中对它们编码。
-Nonstatic data member 进行存取操作时，编译器需要把class object的起始地址加上data member的offset。这个offset在编译期就可获知。
-回到刚才的问题。当Point3d是个derived class，而其继承结构中有一个virtual base class，并且存取的x来自virtual base class，就会有重大差异。我们不能在编译期判断pt指向哪一种class type，因此也不能知道offset，需要延迟到执行期。所以存取速度会稍慢一些。</p>
-  <footer class="entry-footer">
-    <p class="entry-meta"><span class="entry-time">Jul 13, 2019</span> 1 min read</p>
-    <div class="sharing">
-      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2fdata-semantics%2f" title="Share on Facebook">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
-      </a>
-      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=Data%e8%af%ad%e6%84%8f%e5%ad%a6&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fdata-semantics%2f" title="Share on Twitter">
-        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
-      </a>
-      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=Data%e8%af%ad%e6%84%8f%e5%ad%a6&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fdata-semantics%2f" title="Share on Google+">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
-      </a>
-    </div>
-  </footer>
-</article>
-
-      
-        <article class="entry-single">
-  
-  <header class="entry-header">
-    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/blog/" title="查询处理" class="entry-link">查询处理</a></h3>
-  </header>
-
-  <p class="entry-summary">查询计划 (Query Plan) DBMS将SQL语句转换为查询计划。运算符被安排在树形数据结构上，数据流的方向为从叶子指向根，树中根节点的输出就是查询的结果。通常，运算符是二元的（1-2个孩子）。可以用多种方式执行相同的查询计划。大多数DBMS尽可能使用索引扫描。
-处理模型 (Processing Models) DBMS的处理模型会定义系统如何执行查询计划。不同的模型针对不同的工作负载进行将进行各种权衡。
-迭代器模型 (Iterator Model) 这是最常见的处理模型，几乎每个DBMS都使用它。
- 自上而下处理
- 每个查询计划运算符都实现next函数：
- 在每次调用next时，如果已经没有元组了，则运算符返回单个元组或空标记
- 运算符实现一个循环，在其子代上调用next，然后检索它们的元组处理它们
-  允许管道传输(pipelining)，DBMS在检索下一个元组之前，可以通过尽可能多的运算符处理元组。
- 某些运算符将阻塞，直到孩子发送出所有元组（连接，子查询，排序）。
- 使用（LIMIT）可轻松实现输出控制。
-  物化模型 (Materialization Model) 每个运算符一次性处理其输入，然后一次性发出其输出。运算符“物化”它的输出为单一结果。
- 自下而上处理。
- 此方法更适用于OLTP，因为查询通常一次只访问少量元组。因此，检索元组的函数调用较少。
- 对于具有较大中间结果的OLAP查询不利。
-  矢量化模型 (Vectorization Model) 就像迭代器模型一样，每个运算符都实现了next函数。但每个运算符都会发出批量（即vector）的数据而不是单个元组。
- 自上而下处理
- 非常适合必须扫描大量元组的OLAP查询，因为调用next次数较少
-  访问方法 (Access Method) 访问方法是DBMS如何访问存储在表中的数据。这些将是查询计划中最底层的运算符，将数据“喂”到它上面的运算符中。在关系代数中没有相应的运算符。
-顺序扫描 (Sequential Scan) 对于表中的每一页，遍历每一页并从缓冲池中取出。对于每一页，遍历所有元组并评估期望值以决定是否包含元组。
-优化：
- 预取 (Prefetching)：提前获取下几页，以便DBMS不必阻塞。
- 并行化：并行使用多个线程或多个进程执行扫描。
- 缓冲池旁路 (Buffer Pool Bypass)：扫描运算符将从磁盘中获取的页面存储在其本地内存中而非缓冲池。这避免了顺序读入 (sequential flooding) 的问题。</p>
-  <footer class="entry-footer">
-    <p class="entry-meta"><span class="entry-time">Jul 10, 2019</span> 1 min read</p>
-    <div class="sharing">
-      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2fblog%2f" title="Share on Facebook">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
-      </a>
-      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=%e6%9f%a5%e8%af%a2%e5%a4%84%e7%90%86&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fblog%2f" title="Share on Twitter">
-        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
-      </a>
-      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=%e6%9f%a5%e8%af%a2%e5%a4%84%e7%90%86&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2fblog%2f" title="Share on Google+">
-        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
-      </a>
-    </div>
-  </footer>
-</article>
-
-      
-    
-    
+      <div class="sharing">
+        <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Facebook">
+          <svg class="icon icon-facebook" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
+        </a>
+        <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=%e9%9c%80%e8%a6%81TIME_WAIT%e7%9a%84%e5%8e%9f%e5%9b%a0&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Twitter">
+          <svg class="icon icon-twitter" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
+        </a>
+        <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=%e9%9c%80%e8%a6%81TIME_WAIT%e7%9a%84%e5%8e%9f%e5%9b%a0&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftime_wait%2f" title="Share on Google+">
+          <svg class="icon icon-google" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
+        </a>
+      </div>
+    </footer>
   </section>
 
     <footer class="footer">

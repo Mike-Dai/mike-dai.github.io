@@ -6,10 +6,23 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 31 Jul 2019 17:44:01 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Aug 2019 16:01:15 +0800</lastBuildDate>
     
 	<atom:link href="https://mike-dai.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>需要TIME_WAIT的原因</title>
+      <link>https://mike-dai.github.io/post/time_wait/</link>
+      <pubDate>Sat, 03 Aug 2019 16:01:15 +0800</pubDate>
+      
+      <guid>https://mike-dai.github.io/post/time_wait/</guid>
+      <description>TIMEWAIT的时长是MSL的2倍。MSL全称maximum segment lifetime，指任何给定IP报文能在网络中存活的时间。
+它的存在有两个原因：
+ 为了实现TCP全双工连接的可靠终止。TCP连接中server关闭时，向client发送FIN，client接收并回复ACK。假设这最终的ACK丢失了，server就需要重新发送FIN。有了TIMEWAIT，client就可以保存状态，接收这个FIN并回复ACK。如果没有TIMEWAIT，client则无法保存状态，就会回复RST（重新启动），使server中断出错。这也说明TIME_WAIT应该在主动关闭的那一端，因为有可能需要重新发送最终的ACK。
+ 允许“离群的段”在网络中失效。假设两台主机之间建立连接，然后出现延迟或重传段在连接关闭后到达，产生离群的段。马上在跟上次相同主机的相同端口之间又建立连接，由于主机相同端口相同，称为incarnation（化身）。如果旧有连接产生的离群的段在此时到达，会被误认为属于incarnation连接。所以需要TIME_WAIT，如果一个连接进入TIME_WAIT状态，TCP将不会为它制造incarnation。
+  </description>
+    </item>
     
     <item>
       <title>TCP和UDP的区别</title>
