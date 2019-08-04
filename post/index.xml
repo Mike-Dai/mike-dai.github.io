@@ -6,10 +6,21 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Aug 2019 16:01:15 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 Aug 2019 13:21:54 +0800</lastBuildDate>
     
 	<atom:link href="https://mike-dai.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>TCP三次握手和四次挥手</title>
+      <link>https://mike-dai.github.io/post/tcpestablishmentandtermination/</link>
+      <pubDate>Sun, 04 Aug 2019 13:21:54 +0800</pubDate>
+      
+      <guid>https://mike-dai.github.io/post/tcpestablishmentandtermination/</guid>
+      <description> TCP三次握手  server需要准备好接收连接。它会调用socket, bind, listen函数，进行被动打开。 client通过调用connect进行主动打开。client发送SYN(synchronize)，告诉server即将发送的数据的序列号是什么。SYN通常不包含任何数据，只有IP首部，TCP首部，TCP选项。
+ 收到SYN后，server向client回复ACK(acknowledge)，并发送自己的SYN。ACK和SYN在同一个段中发送。 client收到SYN后，向server发送ACK。
+  TCP四次挥手  某一端调用close，进行主动关闭。假设这一端是client，它会发送FIN(finish)，意味着发送数据结束了。 server收到FIN，进行被动关闭。server发送ACK。 server发送FIN。 client收到FIN，发送ACK。  </description>
+    </item>
     
     <item>
       <title>需要TIME_WAIT的原因</title>

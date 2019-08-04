@@ -220,6 +220,32 @@
         <article class="entry-single">
   
   <header class="entry-header">
+    <h3 class="entry-title"><a href="https://mike-dai.github.io/post/tcpestablishmentandtermination/" title="TCP三次握手和四次挥手" class="entry-link">TCP三次握手和四次挥手</a></h3>
+  </header>
+
+  <p class="entry-summary"> TCP三次握手  server需要准备好接收连接。它会调用socket, bind, listen函数，进行被动打开。 client通过调用connect进行主动打开。client发送SYN(synchronize)，告诉server即将发送的数据的序列号是什么。SYN通常不包含任何数据，只有IP首部，TCP首部，TCP选项。
+ 收到SYN后，server向client回复ACK(acknowledge)，并发送自己的SYN。ACK和SYN在同一个段中发送。 client收到SYN后，向server发送ACK。
+  TCP四次挥手  某一端调用close，进行主动关闭。假设这一端是client，它会发送FIN(finish)，意味着发送数据结束了。 server收到FIN，进行被动关闭。server发送ACK。 server发送FIN。 client收到FIN，发送ACK。  </p>
+  <footer class="entry-footer">
+    <p class="entry-meta"><span class="entry-time">Aug 4, 2019</span> 1 min read</p>
+    <div class="sharing">
+      <a class="share share-facebook" target="_blank" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmike-dai.github.io%2fpost%2ftcpestablishmentandtermination%2f" title="Share on Facebook">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-facebook" /></svg>
+      </a>
+      <a class="share share-twitter" target="_blank" href="https://twitter.com/intent/tweet/?text=TCP%e4%b8%89%e6%ac%a1%e6%8f%a1%e6%89%8b%e5%92%8c%e5%9b%9b%e6%ac%a1%e6%8c%a5%e6%89%8b&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftcpestablishmentandtermination%2f" title="Share on Twitter">
+        <svg class="icon share-twitter-icon" fill="currentColor"><use xlink:href="#icon-twitter" /></svg>
+      </a>
+      <a class="share share-google" target="_blank" href="https://plus.google.com/share?url=TCP%e4%b8%89%e6%ac%a1%e6%8f%a1%e6%89%8b%e5%92%8c%e5%9b%9b%e6%ac%a1%e6%8c%a5%e6%89%8b&amp;url=https%3a%2f%2fmike-dai.github.io%2fpost%2ftcpestablishmentandtermination%2f" title="Share on Google+">
+        <svg class="icon" fill="currentColor"><use xlink:href="#icon-googleplus" /></svg>
+      </a>
+    </div>
+  </footer>
+</article>
+
+      
+        <article class="entry-single">
+  
+  <header class="entry-header">
     <h3 class="entry-title"><a href="https://mike-dai.github.io/post/time_wait/" title="需要TIME_WAIT的原因" class="entry-link">需要TIME_WAIT的原因</a></h3>
   </header>
 
