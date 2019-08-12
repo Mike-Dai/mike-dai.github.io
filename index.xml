@@ -6,10 +6,29 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Aug 2019 12:50:04 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2019 13:31:58 +0800</lastBuildDate>
     
 	<atom:link href="https://mike-dai.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>两种常见的套接字选项： SO_KEEPALIVE和 SO_LINGER</title>
+      <link>https://mike-dai.github.io/post/socketoption/</link>
+      <pubDate>Mon, 12 Aug 2019 13:31:58 +0800</pubDate>
+      
+      <guid>https://mike-dai.github.io/post/socketoption/</guid>
+      <description> SO_KEEPALIVE 如果TCP设置了keep-alive这一选项，那么在2小时内没有发生数据交换，TCP自动向另一端发送keep-alive探测。这一探测另一端必须回答，有三种结果：
+1. 另一端回复ACK，说明仍然在线。
+2. 另一端回复RST，说明崩溃后重启了。套接字的pending error会被设置为ECONNRESET，然后套接字关闭。
+3. 另一端什么也没回复。源自berkeley的实现版本中，TCP会再发送8次额外的探测，每两次间隔75秒，尝试唤醒另一端答复。如果在第一次探测后的11分15秒内没有答复，TCP会放弃。
+SO_LINGER 这一选项适用于面向连接的协议（TCP， SCTP），它规定close如何操作。当close时，套接字发送缓冲区内可能仍然残留部分数据。缺省情况下close此时会立即返回，但SO_LINGER可以改变它。这一选项会在用户进程和内核之间发送以下结构体：
+struct linger { int l_onoff; /* 0是关，非0是开 */ int l_linger; /* 留存时间，单位为秒 */ };   当l_onoff设置为0时， SO_LINGER选项关闭，l_linger被忽视，close仍是缺省情况。
+ 当l_onoff设置为非0，l_linger设置为0，TCP会中断连接当close时。也就是说，TCP抛弃了残留在套接字发送缓冲区中的任何数据，并且给另一端发送RST。
+ 当l_onoff设置为非0，l_linger也为非0，内核会留存(linger) 当套接字close时。也就是说，如果套接字发送缓冲区仍然残留数据，进程会先sleep，让数据继续发送。以下两种情况，进程会醒来：
+   所有数据发送完毕，另一端发来acknowledgement
+ linger时间失效
+  </description>
+    </item>
     
     <item>
       <title>IO多路复用（一)</title>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mike-dai.github.io/post/socketoption/</loc>
+    <lastmod>2019-08-12T13:31:58+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mike-dai.github.io/post/iomultiplexing1/</loc>
     <lastmod>2019-08-11T12:50:04+08:00</lastmod>
   </url>
@@ -55,13 +60,13 @@
   
   <url>
     <loc>https://mike-dai.github.io/</loc>
-    <lastmod>2019-08-11T12:50:04+08:00</lastmod>
+    <lastmod>2019-08-12T13:31:58+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://mike-dai.github.io/post/</loc>
-    <lastmod>2019-08-11T12:50:04+08:00</lastmod>
+    <lastmod>2019-08-12T13:31:58+08:00</lastmod>
     <priority>0</priority>
   </url>
   
